@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from time import sleep
 from config import INTERVAL
 from send_mail import send_mail
-from ics import Calendar, Event
+from ics import Calendar, Event, DisplayAlarm
 import logging
 import tempfile
 import os
@@ -41,6 +41,7 @@ def create_ics(report):
         '%Y年%m月%d日%H时%M分').astimezone(pytz.timezone('Asia/Shanghai'))
     event.duration = datetime.timedelta(hours=1)
     event.description = f"location: {report['location']}"
+    event.alarms = [DisplayAlarm(trigger=datetime.timedelta(minutes=-30))]
     calendar.events.add(event)
     dir_path = tempfile.mkdtemp()
     ics_path = os.path.join(dir_path, f"学术报告-{report['id']}.ics")
