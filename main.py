@@ -3,7 +3,12 @@ from bs4 import BeautifulSoup
 from time import sleep
 from config import INTERVAL
 from send_mail import send_mail
+from ics import Calendar, Event
 import logging
+import tempfile
+import os
+import datetime
+import pytz
 
 
 def get_reports():
@@ -25,6 +30,23 @@ def get_reports():
         for k, v in key2index.items()
     } for report in soup.select('#table_info > tbody > tr.bt06')]
     return reports
+
+
+def create_ics(report):
+    calendar = Calendar()
+    event = Event()
+    event.name = f"学术报告 - {report['name_zh']} - {report['reporter']}"
+    event.begin = datetime.datetime.strptime(
+        report['date'],
+        '%Y年%m月%d日%H时%M分').astimezone(pytz.timezone('Asia/Shanghai'))
+    event.duration = datetime.timedelta(hours=1)
+    event.description = f"location: {report['location']}"
+    calendar.events.add(event)
+    dir_path = tempfile.mkdtemp()
+    ics_path = os.path.join(dir_path, f"学术报告-{report['id']}.ics")
+    with open(ics_path, 'w') as f:
+        f.write(str(calendar))
+    return ics_path
 
 
 if __name__ == '__main__':
@@ -50,8 +72,9 @@ if __name__ == '__main__':
             if report['id'] not in [x['id'] for x in all_reports]:
                 print(f'Found new report: {report}')
                 found = True
+                ics_path = create_ics(report)
                 send_mail(f"Found new report: {report['name_zh']}",
-                          f'Found new report: {report}')
+                          f'Found new report: {report}', [ics_path])
                 all_reports.append(report)
         if not found:
             print('No new report(s) found, continue ...')
