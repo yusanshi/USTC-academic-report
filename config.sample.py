@@ -1,14 +1,12 @@
-# Educational administration system information
 USERNAME = ''
 PASSWORD = ''
 
-INTERVAL = 600
+INTERVAL = 300
 
-# Send mail
-# e.g. send from 00000000@163.com to 00000000@qq.com
-SMTP_HOST = 'smtp.163.com'
-SMTP_PORT = 465
-SMTP_USERNAME = '00000000@163.com'  # SMTP 用户名
-SMTP_PASSWORD = ''  # SMTP 密码（部分邮箱需要填写授权码而不是登录密码）
-SENDER = '00000000@163.com'
-RECEIVERS = ['00000000@qq.com']
+LISTMONK_URL = 'https://example.com'
+LISTMONK_ADMIN = 'listmonk'
+LISTMONK_PASSWORD = ''
+LISTMONK_TEMPLATE_NAME = '默认模板'
+
+SCP_TARGET = 'user@host:/var/www/example.org/USTC-academic-report/'
+SCP_TARGET_URL = 'https://example.org/USTC-academic-report/'
