@@ -47,7 +47,7 @@ def get_reports():
 
 
 def generate_calendar_links(report):
-    title = f"学术报告 - {report['name_zh']} - {report['reporter']}"
+    title = f"学术报告-{report['id']}-{report['name_zh']}-{report['reporter']}"
     description = f"location: {report['location']}"
     start = datetime.datetime.strptime(
         report['date'], '%Y年%m月%d日%H时%M分').astimezone(
@@ -111,7 +111,7 @@ def listmonk_report(report):
         "name":
         f"学术报告-{report['id']}",
         "subject":
-        f"新报告：{report['name_zh']}",
+        f"新报告：{report['id']}-{report['name_zh']}-{report['reporter']}",
         "lists":
         [x['id'] for x in lists['data']['results'] if x['name'] in lists_name],
         "from_email":
