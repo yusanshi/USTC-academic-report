@@ -19,23 +19,26 @@ def get_reports():
     while True:
         try:
             session = login('https://yjs.ustc.edu.cn/default.asp')
-            response = session.get(
-                'https://yjs.ustc.edu.cn/bgzy/m_bgxk_up.asp')
-            soup = BeautifulSoup(response.text, 'lxml')
-            key2index = {
-                'id': 1,
-                'name_zh': 2,
-                'name_en': 3,
-                'reporter': 4,
-                'affiliation': 5,
-                'location': 6,
-                'date': 7,
-                'capacity': 9
-            }
-            reports = [{
-                k: report.select('td')[v].text.strip()
-                for k, v in key2index.items()
-            } for report in soup.select('#table_info > tbody > tr.bt06')]
+            reports = []
+            for page_id in range(1, REPORTS_PAGE_COUNT + 1):
+                response = session.get(
+                    f'https://yjs.ustc.edu.cn/bgzy/m_bgxk_up.asp?querytype=kc&page={page_id}'
+                )
+                soup = BeautifulSoup(response.text, 'lxml')
+                key2index = {
+                    'id': 1,
+                    'name_zh': 2,
+                    'name_en': 3,
+                    'reporter': 4,
+                    'affiliation': 5,
+                    'location': 6,
+                    'date': 7,
+                    'capacity': 9
+                }
+                reports.extend([{
+                    k: report.select('td')[v].text.strip()
+                    for k, v in key2index.items()
+                } for report in soup.select('#table_info > tbody > tr.bt06')])
             return reports
 
         except Exception:

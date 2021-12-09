@@ -3,6 +3,8 @@ PASSWORD = ''
 
 INTERVAL = 300
 
+REPORTS_PAGE_COUNT = 3
+
 LISTMONK_URL = 'https://example.com'
 LISTMONK_ADMIN = 'listmonk'
 LISTMONK_PASSWORD = ''
