@@ -1,11 +1,11 @@
-const args = require("minimist")(process.argv.slice(2));
-const { google, outlook, office365, yahoo, ics } = require("calendar-link");
+const args = require('minimist')(process.argv.slice(2));
+const { google, outlook, office365, yahoo, ics } = require('calendar-link');
 
 const event = {
-  title: args["title"],
-  description: args["description"],
-  start: args["start"], //"2019-12-29 18:00:00 +0100",
-  duration: [1, "hour"],
+  title: args['title'],
+  description: args['description'],
+  start: args['start'], //"2019-12-29 18:00:00 +0100",
+  duration: [1, 'hour'],
 };
 
 const links = {

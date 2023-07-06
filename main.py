@@ -175,5 +175,8 @@ if __name__ == '__main__':
                 found = True
                 listmonk_report(report)
                 all_reports.append(report)
+                # Sleep for some time to avoid tricky bug
+                # with simultaneous campaigns of listmonk
+                sleep(60)
         if not found:
             print('No new report(s) found, continue ...')
