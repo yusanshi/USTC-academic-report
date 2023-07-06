@@ -1,3 +1,7 @@
+# 因研究生教务网站改版，本学术报告提醒服务下线，感谢支持 & 抱歉！
+
+---
+
 # USTC Academic Report Notification
 
 Get email notifications of new academic reports.
